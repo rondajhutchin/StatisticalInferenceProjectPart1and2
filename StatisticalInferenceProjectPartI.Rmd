@@ -46,7 +46,7 @@ SampleMean <- mean(MySimSampleMean)
 TheoreticalMean <- 1 / lambda
 
 ```
-## Comparison summary.  The sample and theoretical mean are very close with a different of -0.0002980731 !
+## Comparison summary:  The sample and theoretical mean are very close with a different of -0.0002980731 !
 ```{r}
 SampleMean
 TheoreticalMean
@@ -64,7 +64,7 @@ TheoreticalStdDev  <- 1/(lambda * sqrt(NumberExp))
 
 
 ```
-## Comparison summary.  The sample Variances and Standard Deviation are close.
+## Comparison summary:  The sample Variances and Standard Deviation are close.
 ```{r}
 SampleVariance
 TheoreticalVariance
@@ -73,7 +73,7 @@ SampleStdDev
 TheoreticalStdDev
 ```
 ## Step 3 for Part I (3)  
-Show that the distribution is approximately normal.
+Show that the distribution is approximately a normal distribution.  Use ggplot to plot the sample means.  Add both the Sample and Theoretical means as lines.  Add both the Sample and Theoretical Standard Deviations.  
 ```{r}
 plotdata <- data.frame(MySimSampleMean)
 Myplot <- ggplot(plotdata, aes(x =MySimSampleMean))
@@ -87,11 +87,11 @@ Myplot <- Myplot + stat_function(fun = dnorm, args = list(mean = TheoreticalMean
 Myplot
 
 ```
-## Comparison summary.  The sample Variances and Standard Deviation are close.
-The previous chart show how close the distribution is to normal.
+## Comparison summary:  The sample Variances and Standard Deviation are close.
+The above chart shows how close the distribution is to a normal distribution.  It also shows how close the sample and theortical mean and standard deviation are to each other.  Below, the Sample and Theoritcal confidence intervals are calculated for comparison.
 ```{r}
 
-SampleConfidence <- round (mean(MySimSampleMean) + c(-1,1)*1.96*sd(MySimSampleMean)/sqrt(NumberExp),3)
+SampleConfidence <- SampleMean + c(-1,1)*1.96 * sd(MySimSampleMean)/sqrt(NumberExp)
 TheoreticalConfidence <- TheoreticalMean + c(-1,1) * 1.96 * sqrt(TheoreticalVariance)/sqrt(NumberExp)
 
 SampleConfidence
