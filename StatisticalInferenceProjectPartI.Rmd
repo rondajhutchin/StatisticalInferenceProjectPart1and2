@@ -64,11 +64,38 @@ TheoreticalStdDev  <- 1/(lambda * sqrt(NumberExp))
 
 
 ```
-## Comparison summary.  The sample Variances and Standard Deviation are close !
+## Comparison summary.  The sample Variances and Standard Deviation are close.
 ```{r}
 SampleVariance
 TheoreticalVariance
 
 SampleStdDev
 TheoreticalStdDev
+```
+## Step 3 for Part I (3)  
+Show that the distribution is approximately normal.
+```{r}
+plotdata <- data.frame(MySimSampleMean)
+Myplot <- ggplot(plotdata, aes(x =MySimSampleMean))
+Myplot <- Myplot + geom_histogram(aes(y=..density..), color="black",
+                        fill = "yellow")
+Myplot <- Myplot + labs(title = "Distribution of 40 Sample Means", x = "Mean of 40 Samples", y = "Density")
+Myplot <- Myplot + geom_vline(aes(xintercept = SampleMean, color = "Sample"))
+Myplot <- Myplot + geom_vline(aes(xintercept = TheoreticalMean, color = "Theoretical"))
+Myplot <- Myplot + stat_function(fun = dnorm, args = list(mean = SampleMean, sd = SampleStdDev), color = "blue", size = 1.0)
+Myplot <- Myplot + stat_function(fun = dnorm, args = list(mean = TheoreticalMean, sd = TheoreticalStdDev), color = "red", size = 1.0)
+Myplot
+
+```
+## Comparison summary.  The sample Variances and Standard Deviation are close.
+The previous chart show how close the distribution is to normal.
+```{r}
+
+SampleConfidence <- round (mean(MySimSampleMean) + c(-1,1)*1.96*sd(MySimSampleMean)/sqrt(NumberExp),3)
+TheoreticalConfidence <- TheoreticalMean + c(-1,1) * 1.96 * sqrt(TheoreticalVariance)/sqrt(NumberExp)
+
+SampleConfidence
+TheoreticalConfidence
+
+
 ```
