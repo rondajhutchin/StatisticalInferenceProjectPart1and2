@@ -1,0 +1,74 @@
+---
+title: "Statistical Inference Project Part I"
+author: "Ronda Hutchin"
+date: "8/22/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part I Assignment Instructions
+
+In this project you will investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. Set lambda = 0.2 for all of the simulations. You will investigate the distribution of averages of 40 exponentials. Note that you will need to do a thousand simulations.
+
+Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials. You should:
+
+(1) Show the sample mean and compare it to the theoretical mean of the distribution.
+(2) Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
+(3) Show that the distribution is approximately normal.
+
+
+## Part I Overview
+The code performs calculations, plots and compares confidence intervals to prove the distribution is a normal distribution.
+
+## Load library & Set Variables
+Set the seed and required variable values per the assignment instructions written above.
+The ggplot2 library is loaded for generating histograms.
+```{r}
+
+library(ggplot2)
+
+set.seed(100)
+lambda <- 0.2
+NumberExp <- 40
+NumberSimulations <- 1000
+
+```
+
+## Step 1 for Part I (1)   
+Run the simulation 1000 times and get the sample mean and compare it to the theoretical mean of the distribution.
+```{r}
+MySimulatedSample <- replicate(NumberSimulations, rexp(NumberExp, lambda))
+MySimSampleMean <- apply(MySimulatedSample, 2, mean)
+SampleMean <- mean(MySimSampleMean)
+TheoreticalMean <- 1 / lambda
+
+```
+## Comparison summary.  The sample and theoretical mean are very close with a different of -0.0002980731 !
+```{r}
+SampleMean
+TheoreticalMean
+SampleMean - TheoreticalMean
+```
+## Step 2 for Part I (2)   
+Show how variable the sample is (via variance and standard deviation) and compare it to the theoretical variance of the distribution.
+```{r}
+
+SampleVariance <- var(MySimSampleMean)
+TheoreticalVariance  <- (1 / lambda)^2 / (NumberExp) 
+
+SampleStdDev <- sd(MySimSampleMean)
+TheoreticalStdDev  <- 1/(lambda * sqrt(NumberExp))
+
+
+```
+## Comparison summary.  The sample Variances and Standard Deviation are close !
+```{r}
+SampleVariance
+TheoreticalVariance
+
+SampleStdDev
+TheoreticalStdDev
+```
