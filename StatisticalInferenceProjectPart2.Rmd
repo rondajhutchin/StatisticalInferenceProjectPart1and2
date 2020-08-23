@@ -28,7 +28,7 @@ summary(ToothGrowth)
 
 
 ## Step (2) Basic Summary of data using a chart
-Using ggplot, the Tooth Length versus Dose is charted. The tooth length increases as the dose increases.
+Using ggplot, the Tooth Length versus Dose is charted. The tooth length increases as the dose increases as shown below.
 
 ```{r}
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -36,11 +36,26 @@ MyGrowthPlot <- ggplot(ToothGrowth, aes(x=dose, y=len,fill=dose)) +  geom_boxplo
 MyGrowthPlot
 
 ```
-Using ggplot, the Tooth Length versus Delivery Method is higher for Orange Juice than for Vitamin C.  
+Using ggplot, the Tooth Length versus Delivery Method is higher for Orange Juice than for Vitamin C as shown below.  
 ```{r}
 MyMethodPlot <- ggplot(ToothGrowth, aes(x=supp, y=len,fill=supp)) +  geom_boxplot() +  ggtitle("Tooth Growth by Delivery Method") + xlab("Delivery Method") + ylab("Tooth Length")
 MyMethodPlot
 ```
 ## Step (3) Use Confidence Intervals and/or Hypothesis tests to compare Tooth Growth by Supp and Dose.
+```{r}
+t.test(len ~ supp, data = ToothGrowth)
+```
+## Step (3) Summary of Confidence Intervals part A
+The p-value was 0.06 which is close to the significance level of 5%. The confidence interval of the test contains zero (0). The next test is for tooth length of the group with vitamin C dosage.
+```{r}
+len<-ToothGrowth$len
+dose<-ToothGrowth$dose
+t.test(len[dose==2], len[dose==1], paired = FALSE, var.equal = TRUE)
+```
+## Step (3) Summary of Confidence Intervals part b
+The p-value is close to zero, and we can reject the null hypothesis. Tthe confidence interval does not contain zero, and increasing the dosage increases tooth length.  
 
 
+## Step (4) Conclusion and Assumptions
+
+As a conclusion, the supplement type has no effect on tooth growth, and increasing the dosage leads to increased tooth length (growth).  Assumptions are the simulation was done with random testing of Guinea Pigs in a sample size, and the t-tests variances are assumed to be different for the two groups.
